@@ -6,4 +6,19 @@
   #c. Politica de reinicializacao: configure como always para que se o container cair,
   # volte auto
 
-#4-
+#4- Volumes: /var/lib/postgresql/data
+#5- Adicionar um healthcheck ao servico
+
+version: '3.8'
+services:
+  db:
+    image: ankane/pgvector:latest
+    container_name: university_db_container
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgressql/data
