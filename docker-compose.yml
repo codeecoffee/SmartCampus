@@ -1,19 +1,10 @@
-# 1- Definir imagem e versao do docker compose
-# 2- Para o PostgresSQL procure por uma img que tenha supp ao vector ( essa: ankane/pgvector )
-# 3- Dentro do bloco de services crie um bloco chamado db ou postgres contendo:
-  #a. POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DB
-  #b. Port mapping (rode na porta 5432)
-  #c. Politica de reinicializacao: configure como always para que se o container cair,
-  # volte auto
-
-#4- Volumes: /var/lib/postgresql/data
-#5- Adicionar um healthcheck ao servico
-
 version: '3.8'
+
 services:
   db:
     image: ankane/pgvector:latest
     container_name: university_db_container
+    restart: always
     environment:
       POSTGRES_USER: ${DB_USER}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
@@ -21,4 +12,12 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - postgres_data:/var/lib/postgressql/data
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres_data:
