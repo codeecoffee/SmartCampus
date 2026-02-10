@@ -1,0 +1,9 @@
+# 1- Definir imagem e versao do docker compose
+# 2- Para o PostgresSQL procure por uma img que tenha supp ao vector ( essa: ankane/pgvector )
+# 3- Dentro do bloco de services crie um bloco chamado db ou postgres contendo:
+  #a. POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DB
+  #b. Port mapping (rode na porta 5432)
+  #c. Politica de reinicializacao: configure como always para que se o container cair,
+  # volte auto
+
+#4-
