@@ -2,9 +2,10 @@ version: '3.8'
 
 services:
   db:
-    image: ankane/pgvector:latest
+    image: quay.io/ankane/pgvector:latest
     container_name: university_db_container
     restart: always
+    env_file: .env
     environment:
       POSTGRES_USER: ${DB_USER}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
