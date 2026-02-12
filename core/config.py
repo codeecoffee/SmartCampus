@@ -1,8 +1,10 @@
 import os
-from pydantic_settings import BaseSettings, SettingsConfigDict
 from pathlib import Path
+from pydantic_settings import BaseSettings, SettingsConfigDict
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 ENV_PATH = BASE_DIR / ".env"
+
 class Settings(BaseSettings):
     db_user: str
     db_password: str
@@ -15,9 +17,8 @@ class Settings(BaseSettings):
         env_file_encoding="utf-8",
         extra='ignore'
     )
-
     @property
-    def database_url(self) -> str:
-        return f"postgresql+psycopg://{self.db_user}:{self.db_password}@{self.db_host}:{self.db_port}/{self.db_name}"
+    def database_url(self):
+        return f"postgresql://{self.db_user}:{self.db_password}@{self.db_host}:{self.db_port}/{self.db_name}"
 
 settings = Settings()
