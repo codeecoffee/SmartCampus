@@ -1,24 +1,29 @@
-version: '3.8'
+version: '3.9'
 
 services:
   db:
-    image: quay.io/ankane/pgvector:latest
+    image: docker.io/pgvector/pgvector:pg17
+    #image: quay.io/ankane/pgvector:latest
     container_name: university_db_container
-    restart: always
+    restart: unless-stopped
     env_file: .env
     environment:
       POSTGRES_USER: ${DB_USER}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
       POSTGRES_DB: ${DB_NAME}
+      #PGDATA: /var/lib/postgresql/data/pgdata
     ports:
-      - "5432:5432"
+      - "${DB_PORT}:5432"
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - pgdata:/var/lib/postgresql/data
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}" ]
       interval: 10s
       timeout: 5s
       retries: 5
-
+    # Podman-specific: set up proper permissions
+    user: "999:999"
+    security_opt:
+      - label=disable
 volumes:
-  postgres_data:
+  pgdata:
