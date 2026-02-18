@@ -3,6 +3,8 @@ from typing import Optional, List
 from uuid import UUID, uuid4
 from datetime import datetime
 from enum import Enum
+from models.base import StandaloneModel, TimestampOnlyModel
+
 
 class UserRole(str, Enum):
     STUDENT = "student"
@@ -14,7 +16,7 @@ class UserStatus(str, Enum):
     INACTIVE = "inactive"
     SUSPENDED = "suspended"
 
-class UserBase(SQLModel):
+class UserBase(TimestampOnlyModel):
     first_name: str
     last_name: str
     email: str = Field(unique=True, index=True)
