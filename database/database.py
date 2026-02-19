@@ -1,5 +1,6 @@
 from sqlmodel import SQLModel, create_engine, Session
 from core.config import settings
+
 import models
 
 engine = create_engine(
