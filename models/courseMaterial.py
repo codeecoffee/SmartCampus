@@ -1,24 +1,26 @@
-from pgvector.sqlalchemy import Vector
 from datetime import datetime, timezone
-
-from sqlalchemy.orm import Relationship
-
-from models import Course
-from models.base import StandaloneModel
+from enum import Enum
+from typing import TYPE_CHECKING, List, Optional
 from uuid import UUID
-from sqlmodel import Field
-from typing import Optional, List
-class CourseMaterial(StandaloneModel, table=True):
-    course_id: UUID = Field(foreign_key="course.id")
-    title: str = Field()
-    content: str = Field()
-    #TODO: implement the get_vector_column in the database.py
-    embedding: Optional[List[float]] = Field(
-        sa_column=get_vector_column(nullable=True)
-    )
-    file_url: Optional[str] = Field()
-    file_type: str = Field()
+from sqlmodel import Field, Relationship
+from models.base import StandaloneModel
 
-    indexed_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+if TYPE_CHECKING:
+    from .course import Course
+class MaterialType(str, Enum):
+    PDF = "pdf"
+    DOCX = "docx"
+    LINK = "link"
+    NOTE = "note"
 
-    course: Course = Relationship(back_populates="materials")
+class CourseMaterial(StandaloneModel, table= True):
+    __tablename__ = "course_material"
+
+    course_id: UUID = Field(foreign_key="course.id", index=True)
+    title: str
+    content: str
+    embedding: Optional[List[float]] = Field(default=None)
+    file_url: Optional[str] = Field(default=None)
+    file_type: MaterialType = Field(index=True)
+    indexed_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc, index=True))
+    course: "Course" = Relationship(back_populates="materials")

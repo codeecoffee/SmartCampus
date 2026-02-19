@@ -1,26 +1,30 @@
 from datetime import timezone, datetime
 from enum import Enum
-from typing import Optional, List
-
-from sqlmodel import Field, SQLModel, Relationship
+from typing import Optional, List, TYPE_CHECKING
 from uuid import UUID, uuid4
-
+from sqlmodel import Field, SQLModel, Relationship
 from .base import StandaloneModel
-from .professor import Professor
 
+if TYPE_CHECKING:
+    from .attendance import AttendanceSession
+    from .courseMaterial import CourseMaterial
+    from .enrollment import Enrollment
+    from .professor import Professor
 class CourseStatus(str, Enum):
-    ACTIVE = "ACTIVE"
-    INACTIVE = "INACTIVE"
-    ARCHIVED = "ARCHIVED"
+    ACTIVE = "active"
+    INACTIVE = "inactive"
+    ARCHIVED = "archived"
 
 class Course(StandaloneModel, table=True):
+    __tablename__ = "course"
     title: str = Field(index=True)
-    description: str = Field()
-    code: str = Field(unique=True)
+    description: str
+    code: str = Field(unique=True, index=True)
     credits: int = Field(default=4)
     status: CourseStatus = Field(default=CourseStatus.ACTIVE, index=True)
+    professor_id: Optional[UUID] = Field(default=None, foreign_key="professor.user_id")
 
-    professor: Professor = Relationship(back_populates="courses")
-    enrollements: List["Enrollment"] = Relationship(back_populates="course")
+    professor: Optional["Professor"] = Relationship(back_populates="courses")
+    enrollments: List["Enrollment"] = Relationship(back_populates="course")
     materials: List["CourseMaterial"] = Relationship(back_populates="course")
-    # grades: List["Grade"] = Relationship(back_populates="course")
+    attendance_sessions: List["AttendanceSession"] = Relationship(back_populates="course")

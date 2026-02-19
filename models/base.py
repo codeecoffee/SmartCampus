@@ -10,11 +10,7 @@ class TimestampMixin(SQLModel):
 
 #primary key mixin
 class UUIDPKMixin(SQLModel):
-    id: UUID = Field(default_factory=uuid4, primary_key=True)
-
-#inherited PK
-class InheritedPKMixin(SQLModel):
-    pass
+    id: UUID = Field(default_factory=uuid4, primary_key=True, index=True)
 class StandaloneModel(UUIDPKMixin, TimestampMixin):
     pass
 class TimestampOnlyModel(TimestampMixin):
