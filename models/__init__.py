@@ -1,7 +1,31 @@
+from .aiInteraction import AIInteraction
+from .attendance import AttendanceRecord, AttendanceSession
+from .chatSession import ChatSession
 from .course import Course
-from .user import User
-from .student import Student
-from .professor import Professor
+from .courseMaterial import CourseMaterial
 from .document import Document
-from .course import Course
-__all__ = ['User', 'Student', 'Course', 'Professor']
+from .documentInteraction import DocumentInteraction
+from .enrollment import Enrollment
+from .grade import Grade
+from .notification import Notification, UserNotification
+from .professor import Professor
+from .student import Student
+from .user import User
+
+__all__ = [
+    "AIInteraction",
+    "AttendanceRecord",
+    "AttendanceSession",
+    "ChatSession",
+    "Course",
+    "CourseMaterial",
+    "Document",
+    "DocumentInteraction",
+    "Enrollment",
+    "Grade",
+    "Notification",
+    "Professor",
+    "Student",
+    "User",
+    "UserNotification",
+]

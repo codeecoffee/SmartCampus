@@ -22,5 +22,5 @@ class Document(StandaloneModel, table=True):
     embedding: Optional[List[float]] = Field(default=None)
     #Source tracking
     file_url: Optional[str]= Field()
-    uploaded_by: Optional[UUID] = Field(foreign_key="user.user_id")
+    uploaded_by: Optional[UUID] = Field(foreign_key="user.id")
     doc_interactions: List["DocInteraction"] = Relationship(back_populates="document")

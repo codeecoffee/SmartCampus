@@ -1,19 +1,31 @@
-from datetime import datetime
-from typing import Optional
-from models.student import Student
-from models
-from models.base import StandaloneModel
-from sqlmodel import Field, Relationship
+from datetime import datetime, timezone
+from enum import Enum
+from typing import Optional, List, TYPE_CHECKING
 from uuid import UUID
-from typing import Optional, List
+from sqlmodel import Field, Relationship
+from models.base import StandaloneModel
 
-class Enrollment(StandaloneModel,table=True):
-    student_id: UUID = Field(foreign_key="students.user_id")
-    course_id: UUID = Field(foreign_key="course.id")
+if TYPE_CHECKING:
+    from .course import Course
+    from .grade import Grade
+    from .student import Student
 
-    status:
-    completed_at: Optional[datetime] = Field(default=None)
+class EnrollmentStatus(str, Enum):
+    ENROLLED = 'enrolled'
+    DROPPED = 'dropped'
+    COMPLETED = 'completed'
+    WAITLISTED = 'waitlisted'
 
-    student: Student = Relationship(back_populates="enrollments")
-    course: Course = Relationship(back_populates="enrollments")
-    grades: List["Grade"] = Relationship(back_populates="enrollment")
+class Enrollment(StandaloneModel, table=True):
+    __tablename__ = 'enrollment'
+
+    student_id: Optional[UUID] = Field(foreign_key="student.user_id", index=True)
+    course_id: Optional[UUID] = Field(foreign_key="course.id", index=True)
+    status: EnrollmentStatus = Field(default=EnrollmentStatus.ENROLLED, index=True)
+    enrollment_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    last_grade_updated_at: datetime = Field(default=None)
+
+    student: "Student" = Relationship(back_populates="enrollments")
+    course: "Course" = Relationship(back_populates="enrollments")
+    grade: List["Grade"] = Relationship(back_populates="enrollment")
+
