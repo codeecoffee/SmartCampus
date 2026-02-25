@@ -1,6 +1,7 @@
 from typing import TYPE_CHECKING, Any, Dict, List, Optional
 from uuid import UUID
-from sqlmodel import Field, Relationship
+from sqlmodel import Field, Relationship, Column
+from sqlalchemy import JSON
 from models.base import StandaloneModel
 from datetime import datetime, timezone
 
@@ -16,7 +17,9 @@ class AIInteraction(StandaloneModel, table=True):
     action_executed: bool = Field(default=False)
     timestamp: datetime = Field(default_factory=lambda: datetime.now(timezone.utc), index=True)
 
-    metadata: Optional[Dict[str, Any]] = Field(default=None)
+    interaction_metadata: Optional[Dict[str, Any]] = Field(
+        default=None, sa_column=Column("interaction_metadata", JSON, nullable=True)
+    )
 
     user: "User" = Relationship(back_populates="interactions")
     session: "ChatSession" = Relationship(back_populates="interactions")
