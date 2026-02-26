@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="LdapConnectionManager">
+    <option name="connections">
+      <list>
+        <connection>
+          <option name="authenticationType" value="Simple (Username/Password)" />
+          <option name="baseDn" value="" />
+          <option name="connectionTimeout" value="5000" />
+          <option name="host" value="jrk.com" />
+          <option name="id" value="505b65bf-4d3e-49b2-9d2f-fc612a7387fb" />
+          <option name="name" value="New connection" />
+          <option name="port" value="636" />
+          <option name="readTimeout" value="30000" />
+          <option name="useSsl" value="true" />
+          <option name="username" value="fferreira" />
+        </connection>
+      </list>
+    </option>
+  </component>
+</project>

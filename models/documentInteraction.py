@@ -12,8 +12,8 @@ if TYPE_CHECKING:
 
 class DocumentInteraction(SQLModel,table=True):
     doc_interaction_id: Optional[UUID] = Field(default_factory=uuid4, primary_key=True)
-    interaction_id: UUID = Field(foreign_key="aiInteraction.interaction_id")
-    doc_id: UUID = Field(foreign_key="document.document_id", index=True)
+    interaction_id: UUID = Field(foreign_key="ai_interaction.id")
+    doc_id: UUID = Field(foreign_key="document.id", index=True)
     relevance_score: float
     usage_order: int
     timestamp: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
