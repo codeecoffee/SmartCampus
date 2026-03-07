@@ -1,2 +1,84 @@
-.env
-notes.txt
+# ----------------------
+# Python / Backend
+# ----------------------
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+backend/.venv/
+
+# Distribution / packaging
+backend/build/
+backend/dist/
+backend/*.egg-info/
+backend/.eggs/
+
+# Installer logs
+backend/pip-log.txt
+backend/pip-delete-this-directory.txt
+
+# Environment / secrets
+backend/.env
+backend/dev.env
+backend/*.env
+
+# Docker-related local overrides
+backend/docker-compose.override.yml
+
+# Pytest / testing
+backend/.pytest_cache/
+backend/.coverage
+backend/coverage.xml
+backend/htmlcov/
+
+# Logs
+backend/*.log
+backend/logs/
+backend/*.out
+backend/*.err
+
+# SQLite / local database files
+backend/*.sqlite3
+backend/*.db
+backend/*.db-journal
+
+# Miscellaneous
+backend/*.swp
+backend/*.bak
+backend/*.tmp
+backend/.DS_Store
+
+# IDE / editor folders
+backend/.vscode/
+backend/.idea/
+backend/*.sublime-project
+backend/*.sublime-workspace
+
+# ----------------------
+# Node / Frontend
+# ----------------------
+
+# Node modules
+frontend/node_modules/
+
+# Build artifacts
+frontend/dist/
+frontend/build/
+
+# Local environment
+frontend/.env
+
+# Logs
+frontend/*.log
+
+# IDE / editor folders
+frontend/.vscode/
+frontend/.idea/
+
+# Misc
+frontend/.DS_Store
+frontend/*.tmp
+frontend/*.bak

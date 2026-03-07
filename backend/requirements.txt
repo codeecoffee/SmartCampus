@@ -1,0 +1,12 @@
+alembic
+fastapi
+psycopg2-binary
+pydantic
+pydantic-settings
+python-dotenv
+requests
+sentry-sdk
+sqlalchemy
+sqlmodel
+httpx
+PyYAML
